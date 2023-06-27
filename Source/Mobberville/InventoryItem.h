@@ -11,6 +11,4 @@ struct MOBBERVILLE_API FInventoryItem
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere);
 	FString name;
-
-	FActorSpawnParameters prefab;
 };
