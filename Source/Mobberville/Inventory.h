@@ -20,11 +20,16 @@ public:
 	void AddItem(FInventoryItem item, int64 count = 1);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void RemoveItem(FInventoryItem item, int64 count = 1);
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	int64 GetItemCount(FInventoryItem item);
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere);
-	int64 testItem;
-
+private:
+	struct ItemComparator
+	{
+		bool operator() (const FInventoryItem& a, const FInventoryItem b) const;
+	};
 protected:
-	std::map<FInventoryItem, int64> items;
+	std::map<FInventoryItem, int64, ItemComparator> items;
 };
