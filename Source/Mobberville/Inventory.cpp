@@ -16,6 +16,8 @@ void UInventory::AddItem(FInventoryItem item, int64 count)
 	// Add to counter and create entry if required.
 	int64* itemCounter = &items[item];
 	*itemCounter += count;
+
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("%i %s added. Total: %i"), count, *(item.name), *itemCounter));
 }
 
 void UInventory::RemoveItem(FInventoryItem item, int64 count)
