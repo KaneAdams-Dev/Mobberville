@@ -1,62 +1,62 @@
 #include "Inventory.h"
 
+#include "Item.h"
+
 UInventory::UInventory()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UInventory::AddItem(FInventoryItem item, int64 count)
+void UInventory::AddItem(TSubclassOf<AItem> item, int64 count)
 {
 	if (count <= 0)
 	{
-		// Don't add negative amounts of items
+		// If count is negative or non existent, don't do anything.
 		return;
 	}
 
-	// Add to counter and create entry if required.
-	int64* itemCounter = &items[item];
-	*itemCounter += count;
-
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("%i %s added. Total: %i"), count, *(item.name), *itemCounter));
+	// Get item ID
+	AItem* itemPtr = (AItem*) item.Get();
+	FString itemID = itemPtr->itemID;
+	
+	if (!items.Contains(itemID))
+	{
+		// Item does not exist, create the entries.
+		items.Add(itemID, item);
+		itemCounts.Add(itemID, count);
+	}
+	else
+	{
+		// Item exists, add the count to it.
+		itemCounts[itemID] += count;
+	}
 }
 
-void UInventory::RemoveItem(FInventoryItem item, int64 count)
+void UInventory::RemoveItem(TSubclassOf<AItem> item, int64 count)
 {
 	if (count <= 0)
 	{
-		// Don't remove negative amounts of items
+		// If count is negative or non existent, don't do anything.
 		return;
 	}
 
-	if (items.count(item) == 0)
+	// Get item ID
+	AItem* itemPtr = (AItem*) item.Get();
+	FString itemID = itemPtr->itemID;
+	
+	if (!items.Contains(itemID) || !itemCounts.Contains(itemID))
 	{
-		// Return if item already isn't in inventory.
+		// Item already doesn't exist. Don't do anything.
 		return;
 	}
 
-	// Decrement item counter.
-	int64* itemCounter = &items.at(item);
-	*itemCounter -= count;
+	// Remove the item count
+	itemCounts[itemID] -= count;
 
-	if (*itemCounter <= 0)
+	if (itemCounts[itemID] <= 0)
 	{
-		// Remove item from the inventory if the count is zero.
-		items.erase(item);
+		// Remove the item from the inventory if count is less or equal to zero.
+		itemCounts.Remove(itemID);
+		items.Remove(itemID);
 	}
-}
-
-int64 UInventory::GetItemCount(FInventoryItem item)
-{
-	if (items.count(item) == 0)
-	{
-		// Item doesn't exist, so there are zero items.
-		return 0;
-	}
-	return items.at(item);
-}
-
-bool UInventory::ItemComparator::operator() (const FInventoryItem& a, const FInventoryItem b) const
-{
-	// Comparator for FInventoryItem type: just use the FString comparator.
-	return a.name < b.name;
 }
