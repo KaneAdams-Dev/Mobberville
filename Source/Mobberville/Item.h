@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 
+#include "Inventory.h"
+
 #include "Item.generated.h"
 
 UCLASS( Blueprintable, BlueprintType )
@@ -14,7 +16,7 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere);
 	FString itemID;
-	
+
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	static AItem* CreateWorldInstance(UObject* context, TSubclassOf<AItem> item);
 
