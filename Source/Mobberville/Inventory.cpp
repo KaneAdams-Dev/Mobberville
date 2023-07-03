@@ -7,7 +7,7 @@ UInventory::UInventory()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-void UInventory::AddItem(TSubclassOf<AItem> item, int64 count)
+void UInventory::AddItem(AItem* item, int64 count)
 {
 	if (count <= 0)
 	{
@@ -16,8 +16,7 @@ void UInventory::AddItem(TSubclassOf<AItem> item, int64 count)
 	}
 
 	// Get item ID
-	AItem* itemPtr = (AItem*) item.Get();
-	FString itemID = itemPtr->itemID;
+	FString itemID = item->itemID;
 	
 	if (!items.Contains(itemID))
 	{
@@ -32,7 +31,7 @@ void UInventory::AddItem(TSubclassOf<AItem> item, int64 count)
 	}
 }
 
-void UInventory::RemoveItem(TSubclassOf<AItem> item, int64 count)
+void UInventory::RemoveItem(AItem* item, int64 count)
 {
 	if (count <= 0)
 	{
@@ -41,8 +40,7 @@ void UInventory::RemoveItem(TSubclassOf<AItem> item, int64 count)
 	}
 
 	// Get item ID
-	AItem* itemPtr = (AItem*) item.Get();
-	FString itemID = itemPtr->itemID;
+	FString itemID = item->itemID;
 	
 	if (!items.Contains(itemID) || !itemCounts.Contains(itemID))
 	{
