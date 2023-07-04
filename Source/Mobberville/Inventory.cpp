@@ -20,18 +20,20 @@ void UInventory::AddItem(AItem* item, int64 count)
 	
 	if (!items.Contains(itemID))
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Created item"));
-		
 		// Item does not exist, create the entries.
 		items.Add(itemID, item);
 		itemCounts.Add(itemID, count);
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Added to item"));
-
 		// Item exists, add the count to it.
 		itemCounts[itemID] += count;
+	}
+
+	if (shouldAutoEquip && !IsItemEquipped())
+	{
+		// Equip the item if no item is currently equipped.
+		EquipItem(itemID);
 	}
 }
 
@@ -87,4 +89,25 @@ int64 UInventory::GetItemCount(const FString& id)
 		return 0;
 	}
 	return itemCounts[id];
+}
+
+bool UInventory::EquipItem(const FString& id)
+{
+	if (GetItemCount(id) <= 0)
+	{
+		// Item doesn't exist, don't equip it.
+		return false;
+	}
+	equippedItem = id;
+	return true;
+}
+
+const FString& UInventory::GetEquippedItemID()
+{
+	return equippedItem;
+}
+
+bool UInventory::IsItemEquipped()
+{
+	return equippedItem != "";
 }
