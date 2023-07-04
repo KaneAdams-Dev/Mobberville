@@ -36,6 +36,9 @@ public:
 	bool EquipItem(const FString& id);
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void Unequip();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
 	const FString& GetEquippedItemID();
 
 	UFUNCTION(BlueprintCallable, Category = "Inventory")

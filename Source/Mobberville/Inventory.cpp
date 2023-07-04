@@ -62,6 +62,12 @@ void UInventory::RemoveItem(AItem* item, int64 count)
 		// Remove the item from the inventory if count is less or equal to zero.
 		itemCounts.Remove(itemID);
 		items.Remove(itemID);
+
+		if (GetEquippedItemID() == itemID)
+		{
+			// Remove equipped item, if this is it.
+			Unequip();
+		}
 	}
 }
 
@@ -100,6 +106,11 @@ bool UInventory::EquipItem(const FString& id)
 	}
 	equippedItem = id;
 	return true;
+}
+
+void UInventory::Unequip()
+{
+	equippedItem = "";
 }
 
 const FString& UInventory::GetEquippedItemID()
