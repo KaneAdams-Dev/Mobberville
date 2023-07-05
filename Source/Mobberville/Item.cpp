@@ -21,6 +21,11 @@ void AItem::OverlapEvent(AActor* actor, AActor* invoker)
 		return;
 	}
 
+	if (!invoker->ActorHasTag(FName("Player"))) {
+		// Entity unable to pick up item.
+		return;
+	}
+
 	UInventory* inventory = invoker->FindComponentByClass<UInventory>();
 	if (inventory == nullptr)
 	{
