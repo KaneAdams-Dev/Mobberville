@@ -71,6 +71,11 @@ void UInventory::RemoveItem(AItem* item, int64 count)
 	}
 }
 
+void UInventory::GetItemIDs(TArray<FString>& ids)
+{
+	items.GetKeys(ids);
+}
+
 bool UInventory::ItemExists(const FString& id)
 {
 	return items.Contains(id) && itemCounts.Contains(id);

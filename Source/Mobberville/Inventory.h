@@ -17,31 +17,34 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool shouldAutoEquip = true;
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void AddItem(AItem* item, int64 count = 1);
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void RemoveItem(AItem* item, int64 count = 1);
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	void GetItemIDs(TArray<FString>& ids);
+
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	bool ItemExists(const FString& id);
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	AItem* GetItem(const FString& id);
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	int64 GetItemCount(const FString& id);
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	bool EquipItem(const FString& id);
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void Unequip();
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	const FString& GetEquippedItemID();
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	bool IsItemEquipped();
 protected:
 	TMap<FString, AItem*> items;
