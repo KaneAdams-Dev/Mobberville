@@ -34,7 +34,13 @@ void AItem::OverlapEvent(AActor* actor, AActor* invoker)
 		return;
 	}
 
-	OnPickup(invoker, inventory);
+	OnPickup(inventory);
+}
+
+void AItem::OnPickup_Implementation(UInventory* inventory)
+{
+	inventory->AddItem(this);
+	this->Destroy();
 }
 
 AItem* AItem::CreateWorldInstance(UObject* context, TSubclassOf<AItem> item)
