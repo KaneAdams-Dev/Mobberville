@@ -14,11 +14,11 @@ class MOBBERVILLE_API AItem : public AActor
 public:
 	AItem();
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category="Item");
-	FString itemID;
+	UPROPERTY(EditAnywhere, Category="Item")
+	FString itemName;
 
-	UFUNCTION(BlueprintCallable, Category="Item")
-	static AItem* CreateWorldInstance(UObject* context, TSubclassOf<AItem> item);
+	UPROPERTY(EditAnywhere, Category="Item")
+	int64 stackSize = 16;
 
 	UFUNCTION(BlueprintNativeEvent, Category="Item")
 	void OnPickup(UInventory* inventory);

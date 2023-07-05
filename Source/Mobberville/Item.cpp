@@ -42,8 +42,3 @@ void AItem::OnPickup_Implementation(UInventory* inventory)
 	inventory->AddItem(this);
 	this->Destroy();
 }
-
-AItem* AItem::CreateWorldInstance(UObject* context, TSubclassOf<AItem> item)
-{
-	return context->GetWorld()->SpawnActor<AItem>(item, FVector(0, 0, 0), FRotator());
-}

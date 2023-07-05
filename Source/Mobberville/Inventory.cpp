@@ -16,7 +16,7 @@ void UInventory::AddItem(AItem* item, int64 count)
 	}
 
 	// Get item ID
-	FString itemID = item->itemID;
+	FString itemID = item->itemName;
 	
 	if (!items.Contains(itemID))
 	{
@@ -46,7 +46,7 @@ void UInventory::RemoveItem(AItem* item, int64 count)
 	}
 
 	// Get item ID
-	FString itemID = item->itemID;
+	FString itemID = item->itemName;
 	
 	if (!items.Contains(itemID) || !itemCounts.Contains(itemID))
 	{
