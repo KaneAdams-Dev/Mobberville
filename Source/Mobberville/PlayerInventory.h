@@ -22,7 +22,7 @@ public:
 	int32 equippedIndex = 0;
 
 	UFUNCTION(BlueprintCallable, Category="InventoryComponent")
-	int64 AddItem(AItem* item, int64 count = 1) override;
+	virtual int64 AddItem(AItem* item, int64 count = 1) override;
 private:
 	virtual void BeginPlay() override;
 
