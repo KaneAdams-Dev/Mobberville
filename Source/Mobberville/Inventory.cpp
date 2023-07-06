@@ -4,126 +4,81 @@
 
 UInventory::UInventory()
 {
-	PrimaryComponentTick.bCanEverTick = false;
-}
-
-void UInventory::AddItem(AItem* item, int64 count)
-{
-	if (count <= 0)
-	{
-		// If count is negative or non existent, don't do anything.
-		return;
-	}
-
-	// Get item ID
-	FString itemID = item->itemName;
 	
-	if (!items.Contains(itemID))
-	{
-		// Item does not exist, create the entries.
-		items.Add(itemID, item);
-		itemCounts.Add(itemID, count);
-	}
-	else
-	{
-		// Item exists, add the count to it.
-		itemCounts[itemID] += count;
-	}
-
-	if (shouldAutoEquip && !IsItemEquipped())
-	{
-		// Equip the item if no item is currently equipped.
-		EquipItem(itemID);
-	}
 }
 
-void UInventory::RemoveItem(AItem* item, int64 count)
+int32 UInventory::MaxSize()
 {
-	if (count <= 0)
-	{
-		// If count is negative or non existent, don't do anything.
-		return;
-	}
-
-	// Get item ID
-	FString itemID = item->itemName;
-	
-	if (!items.Contains(itemID) || !itemCounts.Contains(itemID))
-	{
-		// Item already doesn't exist. Don't do anything.
-		return;
-	}
-
-	// Remove the item count
-	itemCounts[itemID] -= count;
-
-	if (itemCounts[itemID] <= 0)
-	{
-		// Remove the item from the inventory if count is less or equal to zero.
-		itemCounts.Remove(itemID);
-		items.Remove(itemID);
-
-		if (GetEquippedItemID() == itemID)
-		{
-			// Remove equipped item, if this is it.
-			Unequip();
-		}
-	}
+	return size;
 }
 
-void UInventory::GetItemIDs(TArray<FString>& ids)
+void UInventory::SetMaxSize(int32 newSize)
 {
-	items.GetKeys(ids);
-}
-
-bool UInventory::ItemExists(const FString& id)
-{
-	return items.Contains(id) && itemCounts.Contains(id);
-}
-
-AItem* UInventory::GetItem(const FString& id)
-{
-	if (!ItemExists(id))
+	if (newSize < size)
 	{
-		// Return nullptr if there is no item.
-		// TODO make safer way of handling this.
-		return nullptr;
+		items.SetNumZeroed(newSize, true);
 	}
-	return items[id];
+	size = newSize;
 }
 
-int64 UInventory::GetItemCount(const FString& id)
+const TArray<FInventoryStack>& UInventory::GetItems()
 {
-	if (!ItemExists(id))
+	return items;
+}
+
+int64 UInventory::AddItem(AItem* item, int64 count)
+{
+	if (count == 0)
 	{
-		// Item doesn't exist, so there is 0 of the item.
+		// Don't do anything if count is zero.
 		return 0;
 	}
-	return itemCounts[id];
-}
-
-bool UInventory::EquipItem(const FString& id)
-{
-	if (GetItemCount(id) <= 0)
+	else if (count < 0)
 	{
-		// Item doesn't exist, don't equip it.
-		return false;
+		// Throw notice if negative count, since that really shouldn't happen.
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("SubInventory::AddItem called with negative count."));
+		return -1;
 	}
-	equippedItem = id;
-	return true;
-}
 
-void UInventory::Unequip()
-{
-	equippedItem = "";
-}
+	for (FInventoryStack& stack : items)
+	{
+		if (item == stack.item)
+		{
+			int64 capacity = stack.item->stackSize - stack.count;
+			if (capacity >= count)
+			{
+				stack.count += count;
+				return 0;
+			}
+			else if (capacity > 0)
+			{
+				stack.count += capacity;
+				count -= capacity;
+				continue;
+			}
+		}
+	}
 
-const FString& UInventory::GetEquippedItemID()
-{
-	return equippedItem;
-}
+	while (items.Num() < MaxSize())
+	{
+		// Clamp to stack size
+		int64 stackAmount = FMath::Min(item->stackSize, count);
 
-bool UInventory::IsItemEquipped()
-{
-	return equippedItem != "";
+		// Create & add stack
+		FInventoryStack stack;
+		stack.item = item;
+		stack.count = stackAmount;
+		items.Add(stack);
+
+		// Iterate if count is still above zero
+		count -= stackAmount;
+		if (count <= 0)
+		{
+			// All items added, can return.
+			return 0;
+		}
+	}
+	// Not all items fit into inventory,
+	// return the amount of items that could not fit.
+	return count;
 }

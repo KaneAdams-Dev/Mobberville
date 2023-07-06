@@ -1,54 +1,33 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+
+#include "InventoryStack.h"
 
 #include "Inventory.generated.h"
 
-class AItem;
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class MOBBERVILLE_API UInventory : public UActorComponent
+UCLASS()
+class MOBBERVILLE_API UInventory : public UObject
 {
 	GENERATED_BODY()
 public:
 	UInventory();
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	bool shouldAutoEquip = true;
+	UFUNCTION(BlueprintCallable, Category="SubInventory")
+	int32 MaxSize();
 
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	void AddItem(AItem* item, int64 count = 1);
+	UFUNCTION(BlueprintCallable, Category="SubInventory")
+	void SetMaxSize(int32 newSize);
 
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	void RemoveItem(AItem* item, int64 count = 1);
+	UFUNCTION(BlueprintCallable, Category="SubInventory")
+	const TArray<FInventoryStack>& GetItems();
 
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	void GetItemIDs(TArray<FString>& ids);
-
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	bool ItemExists(const FString& id);
-
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	AItem* GetItem(const FString& id);
-
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	int64 GetItemCount(const FString& id);
-
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	bool EquipItem(const FString& id);
-
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	void Unequip();
-
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	const FString& GetEquippedItemID();
-
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	bool IsItemEquipped();
+	UFUNCTION(BlueprintCallable, Category = "SubInventory")
+		int64 AddItem(AItem* item, int64 count = 1);
 protected:
-	TMap<FString, AItem*> items;
-	TMap<FString, int64> itemCounts;
+	UPROPERTY(EditAnywhere)
+	int32 size = 10;
 
-	FString equippedItem = "";
+	UPROPERTY(EditAnywhere)
+	TArray<FInventoryStack> items;
 };

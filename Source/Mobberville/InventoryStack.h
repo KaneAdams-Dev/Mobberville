@@ -11,9 +11,9 @@ struct MOBBERVILLE_API FInventoryStack
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadOnly)
 	AItem* item;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(BlueprintReadOnly)
 	int64 count;
 };

@@ -21,12 +21,18 @@ void AItem::OverlapEvent(AActor* actor, AActor* invoker)
 		return;
 	}
 
-	if (!invoker->ActorHasTag(FName("Player"))) {
+	if (!invoker->ActorHasTag(FName("Player")))
+	{
 		// Entity unable to pick up item.
 		return;
 	}
 
-	UInventory* inventory = invoker->FindComponentByClass<UInventory>();
+	TScriptInterface<IInventoryComponent> inventory = nullptr;
+	for (UActorComponent* component : invoker->GetComponentsByInterface(UInventoryComponent::StaticClass()))
+	{
+		inventory = component;
+		break;
+	}
 	if (inventory == nullptr)
 	{
 		// Inventory component does not exist on the invoker.
@@ -37,7 +43,7 @@ void AItem::OverlapEvent(AActor* actor, AActor* invoker)
 	OnPickup(inventory);
 }
 
-void AItem::OnPickup_Implementation(UInventory* inventory)
+void AItem::OnPickup_Implementation(const TScriptInterface<IInventoryComponent>& inventory)
 {
 	inventory->AddItem(this);
 	this->Destroy();
