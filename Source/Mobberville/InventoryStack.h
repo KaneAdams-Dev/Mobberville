@@ -2,9 +2,9 @@
 
 #include "CoreMinimal.h"
 
-#include "InventoryStack.generated.h"
+#include "Item.h"
 
-class AItem;
+#include "InventoryStack.generated.h"
 
 USTRUCT(BlueprintType)
 struct MOBBERVILLE_API FInventoryStack
@@ -12,7 +12,7 @@ struct MOBBERVILLE_API FInventoryStack
 	GENERATED_BODY()
 public:
 	UPROPERTY(BlueprintReadOnly)
-	AItem* item;
+	FItem item;
 
 	UPROPERTY(BlueprintReadOnly)
 	int64 count;

@@ -5,7 +5,7 @@
 
 #include "InventoryComponent.generated.h"
 
-class AItem;
+class AItemInstance;
 
 UINTERFACE(MinimalAPI, BlueprintType)
 class UInventoryComponent : public UInterface
@@ -17,5 +17,5 @@ class MOBBERVILLE_API IInventoryComponent
 {
 	GENERATED_BODY()
 public:
-	virtual int64 AddItem(AItem* item, int64 count = 1) = 0;
+	virtual int64 AddItem(AItemInstance* item, int64 count = 1) = 0;
 };

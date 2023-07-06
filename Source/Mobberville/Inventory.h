@@ -23,7 +23,7 @@ public:
 	const TArray<FInventoryStack>& GetItems();
 
 	UFUNCTION(BlueprintCallable, Category = "SubInventory")
-		int64 AddItem(AItem* item, int64 count = 1);
+		int64 AddItem(AItemInstance* item, int64 count = 1);
 protected:
 	UPROPERTY(EditAnywhere)
 	int32 size = 10;

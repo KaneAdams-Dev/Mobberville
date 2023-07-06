@@ -1,6 +1,6 @@
 #include "Inventory.h"
 
-#include "Item.h"
+#include "ItemInstance.h"
 
 UInventory::UInventory()
 {
@@ -26,7 +26,7 @@ const TArray<FInventoryStack>& UInventory::GetItems()
 	return items;
 }
 
-int64 UInventory::AddItem(AItem* item, int64 count)
+int64 UInventory::AddItem(AItemInstance* item, int64 count)
 {
 	if (count == 0)
 	{
