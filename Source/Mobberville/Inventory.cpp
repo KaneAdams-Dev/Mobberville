@@ -4,7 +4,6 @@
 
 UInventory::UInventory()
 {
-	
 }
 
 int32 UInventory::MaxSize()
@@ -26,7 +25,7 @@ const TArray<FInventoryStack>& UInventory::GetItems()
 	return items;
 }
 
-int64 UInventory::AddItem(AItemInstance* item, int64 count)
+int64 UInventory::AddItem(const FItem& item, int64 count)
 {
 	if (count == 0)
 	{
@@ -44,7 +43,7 @@ int64 UInventory::AddItem(AItemInstance* item, int64 count)
 	{
 		if (item == stack.item)
 		{
-			int64 capacity = stack.item->stackSize - stack.count;
+			int64 capacity = stack.item.stackSize - stack.count;
 			if (capacity >= count)
 			{
 				stack.count += count;
@@ -62,7 +61,7 @@ int64 UInventory::AddItem(AItemInstance* item, int64 count)
 	while (items.Num() < MaxSize())
 	{
 		// Clamp to stack size
-		int64 stackAmount = FMath::Min(item->stackSize, count);
+		int64 stackAmount = FMath::Min(item.stackSize, count);
 
 		// Create & add stack
 		FInventoryStack stack;

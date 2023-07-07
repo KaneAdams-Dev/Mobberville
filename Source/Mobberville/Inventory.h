@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 
+#include "Item.h"
 #include "InventoryStack.h"
 
 #include "Inventory.generated.h"
@@ -13,21 +14,21 @@ class MOBBERVILLE_API UInventory : public UObject
 public:
 	UInventory();
 
-	UFUNCTION(BlueprintCallable, Category="SubInventory")
-	int32 MaxSize();
-
-	UFUNCTION(BlueprintCallable, Category="SubInventory")
-	void SetMaxSize(int32 newSize);
-
-	UFUNCTION(BlueprintCallable, Category="SubInventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	const TArray<FInventoryStack>& GetItems();
 
-	UFUNCTION(BlueprintCallable, Category = "SubInventory")
-		int64 AddItem(AItemInstance* item, int64 count = 1);
-protected:
-	UPROPERTY(EditAnywhere)
-	int32 size = 10;
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	int64 AddItem(const FItem& item, int64 count = 1);
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(BlueprintReadWrite)
 	TArray<FInventoryStack> items;
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	int32 MaxSize();
+
+	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	void SetMaxSize(int32 newSize);
+protected:
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 size = 10;
 };

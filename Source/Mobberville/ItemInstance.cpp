@@ -45,7 +45,7 @@ void AItemInstance::OverlapEvent(AActor* actor, AActor* invoker)
 
 void AItemInstance::OnPickup_Implementation(const TScriptInterface<IInventoryComponent>& inventory)
 {
-	inventory->AddItem(this);
+	inventory->AddItem(item);
 	this->Destroy();
 }
 

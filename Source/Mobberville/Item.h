@@ -17,4 +17,6 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="Item")
 	UStaticMesh* mesh;
+
+	bool operator==(const FItem& other) const;
 };

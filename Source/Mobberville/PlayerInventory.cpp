@@ -11,7 +11,7 @@ void UPlayerInventory::BeginPlay()
 	hotbar->SetMaxSize(hotbarSize);
 }
 
-int64 UPlayerInventory::AddItem(AItemInstance* item, int64 count)
+int64 UPlayerInventory::AddItem(const FItem& item, int64 count)
 {
 	count = hotbar->AddItem(item, count);
 	return count;

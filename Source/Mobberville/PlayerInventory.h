@@ -21,8 +21,8 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	int32 equippedIndex = 0;
 
-	UFUNCTION(BlueprintCallable, Category="InventoryComponent")
-	virtual int64 AddItem(AItemInstance* item, int64 count = 1) override;
+	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
+	virtual int64 AddItem(const FItem& item, int64 count = 1) override;
 private:
 	virtual void BeginPlay() override;
 

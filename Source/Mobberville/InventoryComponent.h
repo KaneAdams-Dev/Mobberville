@@ -3,9 +3,9 @@
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
 
-#include "InventoryComponent.generated.h"
+#include "Item.h"
 
-class AItemInstance;
+#include "InventoryComponent.generated.h"
 
 UINTERFACE(MinimalAPI, BlueprintType)
 class UInventoryComponent : public UInterface
@@ -17,5 +17,5 @@ class MOBBERVILLE_API IInventoryComponent
 {
 	GENERATED_BODY()
 public:
-	virtual int64 AddItem(AItemInstance* item, int64 count = 1) = 0;
+	virtual int64 AddItem(const FItem& item, int64 count = 1) = 0;
 };
