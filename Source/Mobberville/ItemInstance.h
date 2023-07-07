@@ -8,7 +8,7 @@
 
 #include "ItemInstance.generated.h"
 
-UCLASS(Blueprintable, BlueprintType)
+UCLASS(Blueprintable)
 class MOBBERVILLE_API AItemInstance : public AActor
 {
 	GENERATED_BODY()
