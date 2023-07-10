@@ -19,4 +19,5 @@ public:
 	UStaticMesh* mesh;
 
 	bool operator==(const FItem& other) const;
+	bool operator!=(const FItem& other) const;
 };

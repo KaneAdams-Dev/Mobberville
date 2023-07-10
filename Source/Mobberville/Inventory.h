@@ -19,6 +19,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	int64 AddItem(const FItem& item, int64 count = 1);
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	int64 HasItem(const FItem& item);
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	int64 RemoveItem(const FItem& item, int64 count = 1);
 
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FInventoryStack> items;
