@@ -23,6 +23,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
 	virtual int64 AddItem(const FItem& item, int64 count = 1) override;
+	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
+	virtual int64 HasItem(const FItem& item) override;
+	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
+	virtual int64 RemoveItem(const FItem& item, int64 count = 1) override;
 private:
 	virtual void BeginPlay() override;
 

@@ -18,4 +18,6 @@ class MOBBERVILLE_API IInventoryComponent
 	GENERATED_BODY()
 public:
 	virtual int64 AddItem(const FItem& item, int64 count = 1) = 0;
+	virtual int64 HasItem(const FItem& item) = 0;
+	virtual int64 RemoveItem(const FItem& item, int64 count = 1) = 0;
 };
