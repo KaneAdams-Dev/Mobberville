@@ -19,3 +19,12 @@ public:
 
 	bool IsEmpty() const;
 };
+
+UCLASS()
+class MOBBERVILLE_API UInventoryStackMethods : public UObject
+{
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable, Category="InventoryStack")
+	static bool IsStackEmpty(const FInventoryStack& stack);
+};
