@@ -17,5 +17,5 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	int64 count;
 
-	bool IsEmpty();
+	bool IsEmpty() const;
 };

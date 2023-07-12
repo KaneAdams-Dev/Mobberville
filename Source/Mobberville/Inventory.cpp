@@ -109,6 +109,12 @@ int64 UInventory::HasItem(TSubclassOf<AItemInstance> item)
 	int64 count = 0;
 	for (const FInventoryStack& invItem : items)
 	{
+		if (invItem.IsEmpty())
+		{
+			// Nothing in this stack, go to next.
+			continue;
+		}
+
 		// True if this item is the specified item.
 		bool isItem = invItem.item.Get()->GetClass() == item.GetDefaultObject()->GetClass();
 		
