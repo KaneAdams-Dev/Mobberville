@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 
-#include "Item.h"
+#include "ItemInstance.h"
 #include "InventoryStack.h"
 
 #include "Inventory.generated.h"
@@ -12,25 +12,21 @@ class MOBBERVILLE_API UInventory : public UObject
 {
 	GENERATED_BODY()
 public:
-	UInventory();
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	int64 AddItem(TSubclassOf<AItemInstance> item, int64 count = 1);
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
-	const TArray<FInventoryStack>& GetItems();
-
+	int64 HasItem(TSubclassOf<AItemInstance> item);
+	
 	UFUNCTION(BlueprintCallable, Category="Inventory")
-	int64 AddItem(const FItem& item, int64 count = 1);
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	int64 HasItem(const FItem& item);
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	int64 RemoveItem(const FItem& item, int64 count = 1);
+	int64 RemoveItem(TSubclassOf<AItemInstance> item, int64 count = 1);
 
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FInventoryStack> items;
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
-	int32 MaxSize();
+	int32 GetMaxSize();
 
-	UFUNCTION(BlueprintCallable, Category = "Inventory")
+	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void SetMaxSize(int32 newSize);
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)

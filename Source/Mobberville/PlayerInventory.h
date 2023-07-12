@@ -6,6 +6,8 @@
 #include "Inventory.h"
 #include "InventoryComponent.h"
 
+#include "ItemInstance.h"
+
 #include "PlayerInventory.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -22,11 +24,16 @@ public:
 	int32 equippedIndex = 0;
 
 	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
-	virtual int64 AddItem(const FItem& item, int64 count = 1) override;
+	virtual int64 AddItem(TSubclassOf<AItemInstance> item, int64 count = 1) override;
+
 	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
-	virtual int64 HasItem(const FItem& item) override;
+	virtual int64 HasItem(TSubclassOf<AItemInstance> item) override;
+
 	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
-	virtual int64 RemoveItem(const FItem& item, int64 count = 1) override;
+	virtual int64 RemoveItem(TSubclassOf<AItemInstance> item, int64 count = 1) override;
+
+	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
+	FInventoryStack& GetEquippedItemStack();
 private:
 	virtual void BeginPlay() override;
 

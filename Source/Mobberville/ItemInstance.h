@@ -4,7 +4,6 @@
 #include "GameFramework/Actor.h"
 
 #include "InventoryComponent.h"
-#include "Item.h"
 
 #include "ItemInstance.generated.h"
 
@@ -15,14 +14,14 @@ class MOBBERVILLE_API AItemInstance : public AActor
 public:
 	AItemInstance();
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="ItemInstance")
-	FItem item;
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="Item")
+	FString name;
+
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="Item")
+	int64 stackSize = 16;
 
 	UFUNCTION(BlueprintNativeEvent, Category="Item")
 	void OnPickup(const TScriptInterface<IInventoryComponent>& inventory);
-
-	UFUNCTION(BlueprintCallable, Category = "ItemInstance")
-	static AItemInstance* SpawnItem(AActor* context, const FItem& _item);
 
 private:
 	UFUNCTION()

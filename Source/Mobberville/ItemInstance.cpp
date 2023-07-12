@@ -45,21 +45,6 @@ void AItemInstance::OverlapEvent(AActor* actor, AActor* invoker)
 
 void AItemInstance::OnPickup_Implementation(const TScriptInterface<IInventoryComponent>& inventory)
 {
-	inventory->AddItem(item);
+	inventory->AddItem(this->GetClass());
 	this->Destroy();
-}
-
-AItemInstance* AItemInstance::SpawnItem(AActor* context, const FItem& _item)
-{
-	AItemInstance* spawned = context->GetWorld()->SpawnActor<AItemInstance>
-	(
-		context->GetActorLocation(),
-		context->GetActorRotation()
-	);
-	spawned->item = _item;
-
-	UStaticMeshComponent* meshComponent = Cast<UStaticMeshComponent>(spawned->AddComponentByClass(UStaticMeshComponent::StaticClass(), false, FTransform::Identity, false));
-	meshComponent->SetStaticMesh(_item.mesh);
-
-	return spawned;
 }

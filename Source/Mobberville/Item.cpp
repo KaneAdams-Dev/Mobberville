@@ -1,8 +1,9 @@
 #include "Item.h"
+#include "ItemInstance.h"
 
 bool FItem::operator==(const FItem& other) const
 {
-	return name.Equals(other.name) && stackSize == other.stackSize;
+	return blueprint == other.blueprint;
 }
 
 bool FItem::operator!=(const FItem& other) const
