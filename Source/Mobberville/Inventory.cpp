@@ -12,7 +12,7 @@ void UInventory::SetMaxSize(int32 newSize)
 		return;
 	}
 
-	items.SetNumUninitialized(newSize);
+	items.SetNum(newSize, true);
 	for (int32 i = size; i < newSize; i++)
 	{
 		items[i] = FInventoryStack();

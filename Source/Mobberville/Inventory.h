@@ -29,6 +29,5 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void SetMaxSize(int32 newSize);
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	int32 size = 10;
+	int32 size = 0;
 };
