@@ -66,7 +66,8 @@ int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 		// Clamp the stack to the max stack
 		items[i].count = FMath::Min(items[i].count, maxStack);
 
-		if (count <= 0) {
+		if (count <= 0)
+		{
 			// All items added, return.
 			return 0;
 		}
@@ -94,7 +95,8 @@ int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 		// Clamp the stack to the max stack
 		items[i].count = FMath::Min(items[i].count, maxStack);
 
-		if (count <= 0) {
+		if (count <= 0)
+		{
 			// All items added, return.
 			return 0;
 		}
