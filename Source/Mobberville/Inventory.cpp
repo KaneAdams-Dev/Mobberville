@@ -22,7 +22,7 @@ void UInventory::SetMaxSize(int32 newSize)
 	size = newSize;
 }
 
-int32 UInventory::GetMaxSize()
+int32 UInventory::GetMaxSize() const
 {
 	return size;
 }
@@ -172,4 +172,23 @@ int64 UInventory::RemoveItem(TSubclassOf<AItemInstance> item, int64 count)
 
 	// Return the amount of items that couldn't be removed.
 	return count;
+}
+
+void UInventory::SwapStack(int32 from, int32 to)
+{
+	if
+	(
+		from < 0 || from >= GetMaxSize()
+	||	to < 0 || to >= GetMaxSize()
+	)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, TEXT("Inventory::SwapStack called with invalid indices."));
+		return;
+	}
+
+	FInventoryStack fromStack = items[from];
+	FInventoryStack toStack = items[to];
+
+	items[from] = toStack;
+	items[to] = fromStack;
 }

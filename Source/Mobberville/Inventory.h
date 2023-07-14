@@ -21,10 +21,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	int64 RemoveItem(TSubclassOf<AItemInstance> item, int64 count = 1);
 
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	void SwapStack(int32 from, int32 to);
+
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FInventoryStack> items;
 
-	int32 GetMaxSize();
+	int32 GetMaxSize() const;
 
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void SetMaxSize(int32 newSize);
