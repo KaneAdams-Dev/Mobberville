@@ -23,6 +23,9 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	int32 equippedIndex = 0;
 
+	UPROPERTY(BlueprintReadOnly)
+	UInventory* inventory;
+
 	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
 	virtual int64 AddItem(TSubclassOf<AItemInstance> item, int64 count = 1) override;
 
@@ -39,4 +42,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	int32 hotbarSize = 10;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 inventorySize = 40;
 };
