@@ -120,7 +120,7 @@ int64 UInventory::HasItem(TSubclassOf<AItemInstance> item)
 		}
 
 		// True if this item is the specified item.
-		bool isItem = invItem.item.Get()->GetClass() == item.GetDefaultObject()->GetClass();
+		bool isItem = invItem.item.GetDefaultObject()->GetClass() == item.GetDefaultObject()->GetClass();
 		
 		// Add count of the stack, multiplied by a mask of whether this is the item.
 		count += invItem.count * isItem;
@@ -149,7 +149,7 @@ int64 UInventory::RemoveItem(TSubclassOf<AItemInstance> item, int64 count)
 			// This stack is empty.
 			continue;
 		}
-		if (items[i].item.Get()->GetClass() != item.Get()->GetClass())
+		if (items[i].item.GetDefaultObject()->GetClass() != item.GetDefaultObject()->GetClass())
 		{
 			// This is not the same item as the provided one. Get next item.
 			continue;
