@@ -41,6 +41,8 @@ int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 		return -1;
 	}
 
+	AItemInstance* itemInstance = item.GetDefaultObject();
+	
 	// Add to existing stacks of this item.
 	for (int32 i = 0; i < size; i++)
 	{
@@ -49,15 +51,16 @@ int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 			// This stack is empty.
 			continue;
 		}
-		if (items[i].item.Get()->GetClass() != item.Get()->GetClass())
+
+		AItemInstance* stackItem = items[i].item.GetDefaultObject();
+		if (stackItem->GetClass() != itemInstance->GetClass())
 		{
 			// This is not the same item as the provided one. Get next item.
 			continue;
 		}
 
 		items[i].count += count;
-
-		AItemInstance* stackItem = items[i].item.GetDefaultObject();
+		
 		const int64 maxStack = stackItem->stackSize;
 
 		// Set count to the remainder
@@ -74,7 +77,6 @@ int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 	}
 
 	// Create a new stack if there is space in the inventory.
-	AItemInstance* itemInstance = item.GetDefaultObject();
 	const int32 maxStack = itemInstance->stackSize;
 
 	for (int32 i = 0; i < size; i++)
