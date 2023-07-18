@@ -7,6 +7,8 @@
 
 #include "Inventory.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInventoryUpdated);
+
 UCLASS()
 class MOBBERVILLE_API UInventory : public UObject
 {
@@ -24,6 +26,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void SwapStack(int32 from, int32 to);
 
+	UPROPERTY(BlueprintAssignable, Category="Inventory")
+	FInventoryUpdated inventoryUpdatedEvent;
+
 	UPROPERTY(BlueprintReadWrite)
 	TArray<FInventoryStack> items;
 
@@ -33,4 +38,10 @@ public:
 	void SetMaxSize(int32 newSize);
 protected:
 	int32 size = 0;
+
+private:
+	/// <summary>
+	/// Calls the update event and passes through the given value.
+	/// </summary>
+	int64 InventoryReturn(int64 val);
 };

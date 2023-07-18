@@ -38,8 +38,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category="PlayerInventory")
 	FInventoryStack& GetEquippedItemStack();
 
-	UFUNCTION(BlueprintImplementableEvent, Category="PlayerInventory")
-	void OnInventoryUpdated();
 private:
 	virtual void BeginPlay() override;
 

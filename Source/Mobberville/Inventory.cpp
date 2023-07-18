@@ -27,6 +27,12 @@ int32 UInventory::GetMaxSize() const
 	return size;
 }
 
+int64 UInventory::InventoryReturn(int64 val)
+{
+	inventoryUpdatedEvent.Broadcast();
+	return val;
+}
+
 int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 {
 	if (count == 0)
@@ -72,7 +78,7 @@ int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 		if (count <= 0)
 		{
 			// All items added, return.
-			return 0;
+			return InventoryReturn(0);
 		}
 	}
 
@@ -100,12 +106,12 @@ int64 UInventory::AddItem(TSubclassOf<AItemInstance> item, int64 count)
 		if (count <= 0)
 		{
 			// All items added, return.
-			return 0;
+			return InventoryReturn(0);
 		}
 	}
 
 	// No more space in inventory, return the amount of items that could not be added.
-	return count;
+	return InventoryReturn(count);
 }
 
 int64 UInventory::HasItem(TSubclassOf<AItemInstance> item)
@@ -168,12 +174,12 @@ int64 UInventory::RemoveItem(TSubclassOf<AItemInstance> item, int64 count)
 		if (count <= 0)
 		{
 			// Items have been removed.
-			return 0;
+			return InventoryReturn(0);
 		}
 	}
 
 	// Return the amount of items that couldn't be removed.
-	return count;
+	return InventoryReturn(count);
 }
 
 void UInventory::SwapStack(int32 from, int32 to)
@@ -193,4 +199,6 @@ void UInventory::SwapStack(int32 from, int32 to)
 
 	items[from] = toStack;
 	items[to] = fromStack;
+
+	inventoryUpdatedEvent.Broadcast();
 }

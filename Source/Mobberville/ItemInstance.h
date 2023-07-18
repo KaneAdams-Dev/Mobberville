@@ -17,7 +17,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="Item")
 	FString name;
 
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category = "Item")
+	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="Item")
 	UTexture2D* icon;
 
 	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="Item")
