@@ -1,4 +1,5 @@
 #include "AIFunctions.h"
+#include "PlayerInventory.h"
 
 TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FEncapsule>& questObjects, UPARAM(ref)int& numberOfQuests)
 {
@@ -30,19 +31,22 @@ bool UAIFunctions::CheckFirstPositionChoice(UPARAM(ref) bool& firstChoice, UPARA
 }
 
 void UAIFunctions::SetQuestParametersLength(UPARAM(ref)int& QuestLength, UPARAM(ref)TArray<FString>& QuestTexts, UPARAM(ref)TArray<FVector>& QuestLocations, UPARAM(ref)TArray<int>& QuestRewards, UPARAM(ref)TArray<FEncapsule>& QuestObjectsList) {
-	QuestTexts.SetNum(QuestLength);
-	QuestLocations.SetNum(QuestLength);
-	QuestRewards.SetNum(QuestLength);
-	QuestObjectsList.SetNum(QuestLength);
+
 }
 
-void UAIFunctions::SetQuestObjects(UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)UObject* obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList)
+bool objsSet = false;
+TArray<FEncapsule> UAIFunctions::SetQuestObjects(UPARAM(ref)int& numberOfQuests, UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)TSubclassOf<AItemInstance> obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList)
 {
-	for (int i = 0; i < questObjectsList.Num(); i++) {
+	FEncapsule questObjs;
+	questObjectsList.Init(questObjs, numberOfQuests);
+
+	for (int i = 0; i < numberOfQuests; i++) {
 		for (int j = 0; j < numberOfObj[i]; j++) {
 			questObjectsList[i].questObjs.Add(obj);
 		}
 	}
+
+	return questObjectsList;
 }
 
 int startPos = 0;
@@ -89,4 +93,12 @@ bool UAIFunctions::CheckQuestStatus(UPARAM(ref)TArray<FQuest>& quests, UPARAM(re
 	else {
 		return false;
 	}
+}
+
+void UAIFunctions::CompleteQuest(UPARAM(ref)FQuest activeQuest, UPARAM(ref)TArray<FQuest> completedQuests) {
+	if (!activeQuest.questComplete) {
+		activeQuest.questComplete = true;
+		completedQuests.Add(activeQuest);
+	}
+
 }

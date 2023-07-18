@@ -2,6 +2,8 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "ItemInstance.h"
+#include "MobbervilleCharacter.h"
 #include "AIFunctions.generated.h"
 
 UENUM(BlueprintType)
@@ -16,19 +18,30 @@ USTRUCT(BlueprintType)
 struct FQuest {
 	GENERATED_BODY()
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FString QuestText;
-	bool questAccepted = false;
-	bool questComplete = false;
-	FVector objectiveLocation;
-	TArray<UObject*> objectsToCollect;
-	int reward;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool questAccepted = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool questComplete = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector objectiveLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<TSubclassOf<AItemInstance>> objectsToCollect;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int reward;
 };
 
 USTRUCT(BlueprintType)
 struct FEncapsule {
 	GENERATED_BODY()
 
-		TArray<UObject*> questObjs;
+		TArray<TSubclassOf<AItemInstance>> questObjs;
 };
 
 UCLASS(Blueprintable)
@@ -46,7 +59,7 @@ public:
 		static void SetQuestParametersLength(UPARAM(ref)int& QuestLength, UPARAM(ref)TArray<FString>& QuestTexts, UPARAM(ref)TArray<FVector>& QuestLocations, UPARAM(ref)TArray<int>& QuestRewards, UPARAM(ref)TArray<FEncapsule>& QuestObjectsList);
 
 	UFUNCTION(BlueprintCallable)
-		static void SetQuestObjects(UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)UObject* obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList);
+		static TArray<FEncapsule> SetQuestObjects(UPARAM(ref)int& numberOfQuests, UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)TSubclassOf<AItemInstance> obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList);
 
 	UFUNCTION(BlueprintCallable)
 		static TArray<FQuest> GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FEncapsule>& questObjects, UPARAM(ref)int& numberOfQuests);
@@ -59,4 +72,7 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		static bool CheckQuestStatus(UPARAM(ref)TArray<FQuest>& quests, UPARAM(ref)FQuest& activeQuest, UPARAM(ref)int& questNumber);
+
+	UFUNCTION(BlueprintCallable)
+		static void CompleteQuest(UPARAM(ref)FQuest activeQuest, UPARAM(ref)TArray<FQuest> completedQuests);
 };
