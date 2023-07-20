@@ -32,3 +32,9 @@ then navigate to the top left of the window, click Build, and then Build Solutio
 ![Build](readme/vs5.png)
 
 After this, launch Unreal Engine and the project should launch.
+
+## When updating work
+
+When first opening the project to work, make sure to pull all changes so that you are starting work with the most up to date version.
+
+When uploading work, which should be at least once per day at the end of the workday, make sure to close all of the project entirely, pull any changes then create commit to push.
