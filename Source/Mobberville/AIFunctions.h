@@ -41,7 +41,27 @@ USTRUCT(BlueprintType)
 struct FEncapsule {
 	GENERATED_BODY()
 
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<TSubclassOf<AItemInstance>> questObjs;
+};
+
+USTRUCT(BlueprintType)
+struct FObjectType {
+	GENERATED_BODY()
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TSubclassOf<AItemInstance> Object;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		int numberOfObject;
+};
+
+USTRUCT(BlueprintType)
+struct FObjectTypes {
+	GENERATED_BODY()
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<FObjectType> questsItems;
 };
 
 UCLASS(Blueprintable)
@@ -59,10 +79,10 @@ public:
 		static void SetQuestParametersLength(UPARAM(ref)int& QuestLength, UPARAM(ref)TArray<FString>& QuestTexts, UPARAM(ref)TArray<FVector>& QuestLocations, UPARAM(ref)TArray<int>& QuestRewards, UPARAM(ref)TArray<FEncapsule>& QuestObjectsList);
 
 	UFUNCTION(BlueprintCallable)
-		static TArray<FEncapsule> SetQuestObjects(UPARAM(ref)int& numberOfQuests, UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)TSubclassOf<AItemInstance> obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList);
+		static TArray<FEncapsule> SetQuestObjects(UPARAM(ref)int& numberOfQuests, UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)TSubclassOf<AItemInstance> obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList, UPARAM() TArray<TSubclassOf<AItemInstance>> objTypes, UPARAM(ref)TArray<int>& numberOfObjTypes);
 
 	UFUNCTION(BlueprintCallable)
-		static TArray<FQuest> GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FEncapsule>& questObjects, UPARAM(ref)int& numberOfQuests);
+		static TArray<FQuest> GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FObjectTypes>& questObjects, UPARAM(ref)int& numberOfQuests);
 
 	UFUNCTION(BlueprintCallable)
 		static TArray<FString> SetSpeechText(UPARAM(ref) TArray<FQuest>& quests, UPARAM(ref)int& questNo, UPARAM(ref) int& sentenceNo, UPARAM(ref) UAIFunctions* myObj);

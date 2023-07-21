@@ -1,7 +1,7 @@
 #include "AIFunctions.h"
 #include "PlayerInventory.h"
 
-TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FEncapsule>& questObjects, UPARAM(ref)int& numberOfQuests)
+TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FObjectTypes>& questObjects, UPARAM(ref)int& numberOfQuests)
 {
 	TArray<FQuest> quests;
 
@@ -10,7 +10,12 @@ TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, U
 		quest.QuestText = questText[i];
 		quest.objectiveLocation = location[i];
 		quest.reward = reward[i];
-		quest.objectsToCollect = questObjects[i].questObjs;
+		for (int k = 0; k < questObjects[i].questsItems.Num(); k++) {
+			for (int j = 0; j < questObjects[i].questsItems[k].numberOfObject; j++) {
+				quest.objectsToCollect.Add(questObjects[i].questsItems[k].Object);
+			}
+		}
+
 		quests.Add(quest);
 	}
 
@@ -35,14 +40,20 @@ void UAIFunctions::SetQuestParametersLength(UPARAM(ref)int& QuestLength, UPARAM(
 }
 
 bool objsSet = false;
-TArray<FEncapsule> UAIFunctions::SetQuestObjects(UPARAM(ref)int& numberOfQuests, UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)TSubclassOf<AItemInstance> obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList)
+TArray<FEncapsule> UAIFunctions::SetQuestObjects(UPARAM(ref)int& numberOfQuests, UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)TSubclassOf<AItemInstance> obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList, UPARAM() TArray<TSubclassOf<AItemInstance>> objTypes, UPARAM(ref)TArray<int>& numberOfObjTypes)
 {
+	objTypes.Empty();
+	numberOfObjTypes.Empty();
+
 	FEncapsule questObjs;
 	questObjectsList.Init(questObjs, numberOfQuests);
 
 	for (int i = 0; i < numberOfQuests; i++) {
 		for (int j = 0; j < numberOfObj[i]; j++) {
-			questObjectsList[i].questObjs.Add(obj);
+			obj = objTypes[j];
+			for (int k = 0; k < numberOfObjTypes[j]; k++) {
+				questObjectsList[i].questObjs.Add(obj);
+			}
 		}
 	}
 
