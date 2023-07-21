@@ -22,8 +22,3 @@ UInventoryUpdateEvent* UInventoryUpdateEvent::GetInventoryComponentUpdateEvent(c
 {
 	return inventoryComponent->inventoryUpdateEvent;
 }
-
-FInventoryStack& IInventoryComponent::GetItem(const FInventoryReference& reference)
-{
-	return reference.subInventory->items[reference.subInventoryIndex];
-}

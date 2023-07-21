@@ -58,6 +58,4 @@ public:
 	virtual int64 RemoveItem(TSubclassOf<AItemInstance> item, int64 count = 1) = 0;
 	
 	UInventoryUpdateEvent* inventoryUpdateEvent;
-
-	virtual FInventoryStack& GetItem(const FInventoryReference& reference);
 };
