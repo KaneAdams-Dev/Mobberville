@@ -1,6 +1,7 @@
 #include "InventoryComponent.h"
 
 #include "Inventory.h"
+#include "InventoryStack.h"
 
 IInventoryComponent::IInventoryComponent()
 {
@@ -20,4 +21,9 @@ void UInventoryUpdateEvent::OnUpdate()
 UInventoryUpdateEvent* UInventoryUpdateEvent::GetInventoryComponentUpdateEvent(const TScriptInterface<IInventoryComponent>& inventoryComponent)
 {
 	return inventoryComponent->inventoryUpdateEvent;
+}
+
+FInventoryStack& IInventoryComponent::GetItem(const FInventoryReference& reference)
+{
+	return reference.subInventory->items[reference.subInventoryIndex];
 }

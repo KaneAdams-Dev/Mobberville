@@ -9,7 +9,7 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FInventoryUpdated);
 
-UCLASS()
+UCLASS(BlueprintType)
 class MOBBERVILLE_API UInventory : public UObject
 {
 	GENERATED_BODY()

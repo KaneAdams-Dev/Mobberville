@@ -7,6 +7,7 @@
 
 class AItemInstance;
 class UInventory;
+struct FInventoryStack;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FComponentUpdated);
 
@@ -28,6 +29,18 @@ private:
 	void OnUpdate();
 };
 
+USTRUCT(BlueprintType)
+struct FInventoryReference
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	UInventory* subInventory;
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 subInventoryIndex;
+};
+
 UINTERFACE(MinimalAPI, BlueprintType)
 class UInventoryComponent : public UInterface
 {
@@ -43,6 +56,8 @@ public:
 	virtual int64 AddItem(TSubclassOf<AItemInstance> item, int64 count = 1) = 0;
 	virtual int64 HasItem(TSubclassOf<AItemInstance> item) = 0;
 	virtual int64 RemoveItem(TSubclassOf<AItemInstance> item, int64 count = 1) = 0;
-
+	
 	UInventoryUpdateEvent* inventoryUpdateEvent;
+
+	virtual FInventoryStack& GetItem(const FInventoryReference& reference);
 };
