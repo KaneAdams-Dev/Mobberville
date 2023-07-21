@@ -23,9 +23,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	int64 RemoveItem(TSubclassOf<AItemInstance> item, int64 count = 1);
 
-	UFUNCTION(BlueprintCallable, Category="Inventory")
-	void SwapStack(int32 from, int32 to);
-
 	UPROPERTY(BlueprintAssignable, Category="Inventory")
 	FInventoryUpdated inventoryUpdatedEvent;
 
@@ -37,6 +34,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Inventory")
 	void SetMaxSize(int32 newSize);
 protected:
+	UPROPERTY(BlueprintReadOnly)
 	int32 size = 0;
 
 private:
