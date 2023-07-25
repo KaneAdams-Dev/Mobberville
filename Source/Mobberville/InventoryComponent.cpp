@@ -22,3 +22,16 @@ UInventoryUpdateEvent* UInventoryUpdateEvent::GetInventoryComponentUpdateEvent(c
 {
 	return inventoryComponent->inventoryUpdateEvent;
 }
+
+void UInventoryReferenceFunctions::SwapStacks(FInventoryReference a, FInventoryReference b)
+{
+	FInventoryStack* aStack = &a.subInventory->items[a.subInventoryIndex];
+	FInventoryStack* bStack = &b.subInventory->items[b.subInventoryIndex];
+	FInventoryStack aStackClone = *aStack;
+
+	aStack->item = bStack->item;
+	aStack->count = bStack->count;
+
+	bStack->item = aStackClone.item;
+	bStack->count = aStackClone.count;
+}

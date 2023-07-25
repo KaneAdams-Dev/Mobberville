@@ -41,6 +41,15 @@ public:
 	int32 subInventoryIndex;
 };
 
+UCLASS()
+class UInventoryReferenceFunctions : public UObject
+{
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable, Category="InventoryComponent")
+	static void SwapStacks(FInventoryReference a, FInventoryReference b);
+};
+
 UINTERFACE(MinimalAPI, BlueprintType)
 class UInventoryComponent : public UInterface
 {
