@@ -43,3 +43,27 @@ private:
 	/// </summary>
 	int64 InventoryReturn(int64 val);
 };
+
+USTRUCT(BlueprintType)
+struct FInventoryReference
+{
+	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite)
+	UInventory* subInventory;
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 subInventoryIndex;
+};
+
+UCLASS()
+class UInventoryReferenceFunctions : public UObject
+{
+	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	static FInventoryStack& GetReferencedItem(const FInventoryReference& reference);
+
+	UFUNCTION(BlueprintCallable, Category="Inventory")
+	static void SwapStacks(const FInventoryReference& a, const FInventoryReference& b);
+};

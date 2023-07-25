@@ -7,7 +7,6 @@
 
 class AItemInstance;
 class UInventory;
-struct FInventoryStack;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FComponentUpdated);
 
@@ -27,27 +26,6 @@ public:
 private:
 	UFUNCTION()
 	void OnUpdate();
-};
-
-USTRUCT(BlueprintType)
-struct FInventoryReference
-{
-	GENERATED_BODY()
-public:
-	UPROPERTY(BlueprintReadWrite)
-	UInventory* subInventory;
-
-	UPROPERTY(BlueprintReadWrite)
-	int32 subInventoryIndex;
-};
-
-UCLASS()
-class UInventoryReferenceFunctions : public UObject
-{
-	GENERATED_BODY()
-public:
-	UFUNCTION(BlueprintCallable, Category="InventoryComponent")
-	static void SwapStacks(FInventoryReference a, FInventoryReference b);
 };
 
 UINTERFACE(MinimalAPI, BlueprintType)

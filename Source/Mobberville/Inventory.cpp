@@ -181,3 +181,24 @@ int64 UInventory::RemoveItem(TSubclassOf<AItemInstance> item, int64 count)
 	// Return the amount of items that couldn't be removed.
 	return InventoryReturn(count);
 }
+
+FInventoryStack& UInventoryReferenceFunctions::GetReferencedItem(const FInventoryReference& reference)
+{
+	return reference.subInventory->items[reference.subInventoryIndex];
+}
+
+void UInventoryReferenceFunctions::SwapStacks(const FInventoryReference& a, const FInventoryReference& b)
+{
+	FInventoryStack* aStack = &a.subInventory->items[a.subInventoryIndex];
+	FInventoryStack* bStack = &b.subInventory->items[b.subInventoryIndex];
+	FInventoryStack aStackClone = *aStack;
+
+	aStack->item = bStack->item;
+	aStack->count = bStack->count;
+
+	bStack->item = aStackClone.item;
+	bStack->count = aStackClone.count;
+
+	a.subInventory->inventoryUpdatedEvent.Broadcast();
+	b.subInventory->inventoryUpdatedEvent.Broadcast();
+}
