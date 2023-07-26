@@ -25,10 +25,16 @@ struct FQuest {
 		bool questAccepted = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool objectiveCompleted = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool questComplete = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FVector objectiveLocation;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool objectRequirementMet;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TArray<TSubclassOf<AItemInstance>> objectsToCollect;
