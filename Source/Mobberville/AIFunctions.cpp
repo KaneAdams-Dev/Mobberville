@@ -1,7 +1,7 @@
 #include "AIFunctions.h"
 #include "PlayerInventory.h"
 
-TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FObjectTypes>& questObjects, UPARAM(ref)int& numberOfQuests)
+TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FObjectTypes>& questObjects, UPARAM(ref)int& numberOfQuests, UPARAM(ref) TArray<bool> isFetchQuest)
 {
 	TArray<FQuest> quests;
 
@@ -10,6 +10,7 @@ TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, U
 		quest.QuestText = questText[i];
 		quest.objectiveLocation = location[i];
 		quest.reward = reward[i];
+		quest.fetchQuest = isFetchQuest[i];
 		for (int k = 0; k < questObjects[i].questsItems.Num(); k++) {
 			for (int j = 0; j < questObjects[i].questsItems[k].numberOfObject; j++) {
 				quest.objectsToCollect.Add(questObjects[i].questsItems[k].Object);
@@ -20,6 +21,26 @@ TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, U
 	}
 
 	return quests;
+}
+
+bool UAIFunctions::SplitQuestItems(UPARAM(ref)TSubclassOf<AItemInstance>& obj, UPARAM(ref)TSubclassOf<AItemInstance>& previousObj, UPARAM(ref) bool& firstItem, UPARAM(ref) int& numberOfObject, UPARAM(ref) int& ObjectsLength, UPARAM(ref) int& objIndex)
+{
+	if (ObjectsLength != 0) {
+		if (objIndex == ObjectsLength - 1) {
+			numberOfObject += 1;
+			previousObj = obj;
+			return true;
+		}
+	}
+
+	if (firstItem || (obj == previousObj)) {
+		numberOfObject += 1;
+		return false;
+	}
+	else {
+		previousObj = obj;
+		return true;
+	}
 }
 
 bool UAIFunctions::CheckFirstPositionChoice(UPARAM(ref) bool& firstChoice, UPARAM(ref) bool& posReached)
