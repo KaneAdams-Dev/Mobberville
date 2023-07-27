@@ -22,6 +22,9 @@ struct FQuest {
 		FString QuestText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool fetchQuest;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		bool questAccepted = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
@@ -79,6 +82,9 @@ public:
 		bool textRetrieved;
 
 	UFUNCTION(BlueprintCallable)
+		static bool SplitQuestItems(UPARAM(ref) TSubclassOf<AItemInstance>& obj, UPARAM(ref) TSubclassOf<AItemInstance>& previousObj, UPARAM(ref) bool& firstItem, UPARAM(ref) int& numberOfObject, UPARAM(ref) int& ObjectsLength, UPARAM(ref) int& objIndex);
+
+	UFUNCTION(BlueprintCallable)
 		static bool CheckFirstPositionChoice(UPARAM(ref)bool& firstChoice, UPARAM(ref)bool& posReached);
 
 	UFUNCTION(BlueprintCallable)
@@ -88,7 +94,7 @@ public:
 		static TArray<FEncapsule> SetQuestObjects(UPARAM(ref)int& numberOfQuests, UPARAM(ref)TArray<int>& numberOfObj, UPARAM(ref)TSubclassOf<AItemInstance> obj, UPARAM(ref)TArray<FEncapsule>& questObjectsList, UPARAM() TArray<TSubclassOf<AItemInstance>> objTypes, UPARAM(ref)TArray<int>& numberOfObjTypes);
 
 	UFUNCTION(BlueprintCallable)
-		static TArray<FQuest> GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FObjectTypes>& questObjects, UPARAM(ref)int& numberOfQuests);
+		static TArray<FQuest> GetQuests(UPARAM(ref) TArray<FString>& questText, UPARAM(ref)TArray<FVector>& location, UPARAM(ref)TArray<int>& reward, UPARAM(ref)TArray<FObjectTypes>& questObjects, UPARAM(ref)int& numberOfQuests, UPARAM(ref) TArray<bool> isFetchQuest);
 
 	UFUNCTION(BlueprintCallable)
 		static TArray<FString> SetSpeechText(UPARAM(ref) TArray<FQuest>& quests, UPARAM(ref)int& questNo, UPARAM(ref) int& sentenceNo, UPARAM(ref) UAIFunctions* myObj);
