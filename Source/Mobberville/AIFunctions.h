@@ -19,6 +19,9 @@ struct FQuest {
 	GENERATED_BODY()
 
 		UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		AActor* questIssuer;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		FString QuestText;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
