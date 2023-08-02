@@ -11,6 +11,7 @@ TArray<FQuest> UAIFunctions::GetQuests(UPARAM(ref) TArray<FString>& questText, U
 		quest.objectiveLocation = location[i];
 		quest.reward = reward[i];
 		quest.fetchQuest = isFetchQuest[i];
+		quest.objectRequirementMet = false;
 		for (int k = 0; k < questObjects[i].questsItems.Num(); k++) {
 			for (int j = 0; j < questObjects[i].questsItems[k].numberOfObject; j++) {
 				quest.objectsToCollect.Add(questObjects[i].questsItems[k].Object);
